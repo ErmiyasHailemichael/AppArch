@@ -1,0 +1,10 @@
+{
+  "name": "mastodon-architecture-explorer",
+  "version": "1.0.0",
+  "description": "Interactive architecture explorer for Mastodon (CS 8371 assignment)",
+  "private": true,
+  "scripts": {
+    "start": "npx serve .",
+    "test": "node --test test/logic.test.js"
+  }
+}

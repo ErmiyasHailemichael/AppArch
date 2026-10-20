@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mastodon Architecture Explorer</title>
+<meta name="description" content="An interactive map of Mastodon's architecture with a post tracer and a log of facts checked against the docs.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <p class="eyebrow">CS 8371 · Architectural analysis</p>
+  <h1>Mastodon Architecture Explorer</h1>
+  <p class="lede">A map of how Mastodon is built, a tracer that follows one post through the system, and a log of what an AI draft got wrong.</p>
+</header>
+
+<main id="main">
+  <section aria-labelledby="style-h" class="card">
+    <h2 id="style-h">Architectural style</h2>
+    <p><strong>A Ruby on Rails monolith, deployed as three processes.</strong> The web app, the Sidekiq background workers and the API share one codebase. A separate Node.js server handles streaming. PostgreSQL stores the data and Redis holds feeds and job queues.</p>
+    <p>Two more styles show up on top of that: <strong>asynchronous job queues</strong> (work after the response goes to Sidekiq) and a <strong>federated network</strong> (servers exchange posts over ActivityPub). It is not a microservices system.</p>
+  </section>
+
+  <section aria-labelledby="map-h" class="card">
+    <h2 id="map-h">Component map</h2>
+    <p class="hint">Select a component to see what it does and where each fact came from.</p>
+    <div id="map" class="map"></div>
+    <div id="detail" class="detail" tabindex="-1" aria-live="polite"></div>
+  </section>
+
+  <section aria-labelledby="trace-h" class="card">
+    <h2 id="trace-h">Trace a post</h2>
+    <p class="hint">Write a post, then follow it through the system. You can also break a component to see what changes.</p>
+    <form id="trace-form" novalidate>
+      <div class="field">
+        <label for="post-text">Post text</label>
+        <textarea id="post-text" name="text" rows="4" aria-describedby="text-help text-error"></textarea>
+        <p id="text-help" class="help"><span id="count">0</span> of 500 characters (the default limit; servers can change it)</p>
+        <p id="text-error" class="error" role="alert"></p>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="servers">Remote servers with followers</label>
+          <input id="servers" name="servers" type="text" inputmode="numeric" value="12" aria-describedby="servers-error">
+          <p id="servers-error" class="error" role="alert"></p>
+        </div>
+        <div class="field">
+          <label for="failure">What is broken?</label>
+          <select id="failure" name="failure"></select>
+        </div>
+      </div>
+      <div class="field check">
+        <input id="public" type="checkbox" checked>
+        <label for="public">Public post</label>
+      </div>
+      <div class="actions">
+        <button type="submit" class="primary">Trace post</button>
+        <button type="button" id="reset" class="secondary">Reset</button>
+      </div>
+    </form>
+    <div id="result" class="result" hidden>
+      <h3 id="result-h" tabindex="-1">Trace result</h3>
+      <p id="preview" class="preview"></p>
+      <ol id="steps" class="steps"></ol>
+      <p id="summary" class="summary"></p>
+    </div>
+  </section>
+
+  <section aria-labelledby="log-h" class="card">
+    <h2 id="log-h">AI fact-check log</h2>
+    <p class="hint">The first AI draft was checked against the official docs and source code. This is what changed.</p>
+    <ol id="log" class="log"></ol>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>Facts come from the Mastodon documentation, the Mastodon source code and one third-party article. Details can change between releases.</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="logic.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
