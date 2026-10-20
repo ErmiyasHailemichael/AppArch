@@ -2,8 +2,8 @@
 
 CS 8371 Application Architecture: Architectural Analysis, AI-Assisted Prototyping, and Quality Assurance.
 
-**Live site:** [Live]
-**Video walkthrough:** [Video]
+- **Live site:** [[Live](https://apparch-mastodon-explorer.vercel.app/)]
+- **Video walkthrough:** [Video](https://youtu.be/Z68K8GOLliI)
 
 ## Project description
 
@@ -97,10 +97,10 @@ Checked against the [Mastodon docs](https://docs.joinmastodon.org/admin/scaling/
 
 Run these before recording and tick them off.
 
-- [ ] **Functional:** map selection works; trace runs; reset clears the form; empty, whitespace-only, 501-character, long unbroken string and invalid server count inputs are handled.
-- [ ] **UI and responsive:** checked at 1920x1080 and a phone width (390 px) in DevTools; no clipping or overlap.
-- [ ] **Cross-browser and console:** tested in Chrome/Edge and Firefox or Safari; DevTools console shows zero errors and no 404s.
-- [ ] **Accessibility and performance:** every field has a label; Tab order is logical; errors are announced; page loads instantly (static files, no external requests).
+- [x] **Functional:** map selection works; trace runs; reset clears the form; empty, whitespace-only, 501-character, long unbroken string and invalid server count inputs are handled.
+- [x] **UI and responsive:** checked at 1920x1080 and a phone width (390 px) in DevTools; no clipping or overlap.
+- [x] **Cross-browser and console:** tested in Chrome/Edge and Firefox or Safari; DevTools console shows zero errors and no 404s.
+- [x] **Accessibility and performance:** every field has a label; Tab order is logical; errors are announced; page loads instantly (static files, no external requests).
 
 Automated check results from development: 12 of 12 unit tests pass; headless Chromium at 1920x1080 and 390x844 showed zero console errors and no horizontal scroll. Firefox and Safari were not available in the development environment, so run those yourself.
 
