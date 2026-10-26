@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Auth + RBAC Demo</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <h1>Auth + RBAC Demo</h1>
+    <p id="session-status">Checking session...</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>1. Public</h2>
+      <p>Anyone can call this endpoint.</p>
+      <button id="btn-public" type="button">GET /api/public</button>
+    </section>
+
+    <section class="card">
+      <h2>2. Register</h2>
+      <form id="register-form">
+        <label>Username <input id="reg-username" name="username" autocomplete="username" required minlength="3" maxlength="32"></label>
+        <label>Password <input id="reg-password" name="password" type="password" autocomplete="new-password" required minlength="8" maxlength="72"></label>
+        <button type="submit">Register (always creates a User)</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>3. Log in</h2>
+      <form id="login-form">
+        <label>Username <input id="login-username" name="username" autocomplete="username" required></label>
+        <label>Password <input id="login-password" name="password" type="password" autocomplete="current-password" required></label>
+        <button type="submit">Log in</button>
+        <button id="btn-logout" type="button" class="secondary">Log out</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>4. Protected: User dashboard</h2>
+      <p>Requires any signed-in account.</p>
+      <button id="btn-profile" type="button">GET /api/profile</button>
+    </section>
+
+    <section class="card">
+      <h2>5. Restricted: Admin only</h2>
+      <p>This button is always visible. The server decides who gets in.</p>
+      <button id="btn-admin" type="button">GET /api/admin/users</button>
+      <table id="admin-table" hidden>
+        <thead><tr><th>ID</th><th>Username</th><th>Role</th><th>Created</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section class="card wide">
+      <h2>Last response</h2>
+      <p id="last-status">No request yet</p>
+      <pre id="last-body"></pre>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

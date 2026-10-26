@@ -1,0 +1,20 @@
+{
+  "name": "auth-rbac-node",
+  "version": "1.0.0",
+  "description": "Authentication and role-based access control demo (Express + SQLite)",
+  "main": "server.js",
+  "private": true,
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server.js",
+    "test": "node --disable-warning=ExperimentalWarning --test tests/*.test.js",
+    "inspect-db": "node --disable-warning=ExperimentalWarning inspect-db.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
