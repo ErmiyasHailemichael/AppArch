@@ -2,7 +2,7 @@
 
 AD371 Week 04 hands-on: registration, login, logout, and role-based access control (User / Admin) with server-side enforcement.
 
-**Live URL:** `<paste your Render URL here>`
+**Live URL:** `https://auth-rbac-node.onrender.com/`
 **Stack:** Node.js 22+, Express, built-in `node:sqlite`, bcryptjs (password hashing), jsonwebtoken (HS256 token in an HttpOnly cookie). Plain HTML/JS frontend.
 
 ## Features
