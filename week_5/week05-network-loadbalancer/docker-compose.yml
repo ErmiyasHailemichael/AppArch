@@ -1,0 +1,61 @@
+services:
+  nginx:
+    build: ./nginx
+    container_name: lb_nginx
+    ports:
+      - "8080:80"     # HTTP  -> host port 8080
+      - "8443:443"    # HTTPS -> host port 8443 (self-signed cert)
+    networks:
+      - public_subnet
+      - private_subnet   # dual-homed: the ONLY service on both networks
+    depends_on:
+      backend1:
+        condition: service_healthy
+      backend2:
+        condition: service_healthy
+    restart: unless-stopped
+
+  backend1:
+    build: ./backend
+    container_name: backend1
+    hostname: backend1
+    expose:
+      - "5000"           # visible only inside private_subnet; NO host port
+    networks:
+      - private_subnet
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/healthz', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  backend2:
+    build: ./backend
+    container_name: backend2
+    hostname: backend2
+    expose:
+      - "5000"
+    networks:
+      - private_subnet
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/healthz', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+networks:
+  public_subnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.10.0/24
+  private_subnet:
+    driver: bridge
+    internal: true       # no route to the outside world
+    ipam:
+      config:
+        - subnet: 172.28.20.0/24
